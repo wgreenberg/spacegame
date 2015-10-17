@@ -21,12 +21,14 @@ public class SpaceGame extends ApplicationAdapter {
     @Override
     public void create () {
         batch = new SpriteBatch();
+        pixmap = new Pixmap(256, 256, Pixmap.Format.RGBA8888);
+        texture = new Texture(pixmap);
+        sprite = new Sprite(texture);
     }
 
     @Override
     public void render () {
         // I'm 99% we shouldn't ever actually do this kinda shit in the render cycle
-        pixmap = new Pixmap(256, 256, Pixmap.Format.RGBA8888);
         int white = 0xFFFFFFFF;
         int black = 0x000000FF;
         int pattern1, pattern2;
@@ -46,14 +48,12 @@ public class SpaceGame extends ApplicationAdapter {
                     pixmap.drawPixel(i, j, pattern2);
             }
         }
+        texture.draw(pixmap, 0, 0);
+
         offset++;
 
         // dat int overflow
         if (offset > cDim) offset = 0;
-
-        texture = new Texture(pixmap);
-        pixmap.dispose();
-        sprite = new Sprite(texture);
 
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

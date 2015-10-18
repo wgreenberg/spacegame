@@ -20,26 +20,26 @@ public class Universe {
     float turnDuration = 5f;
     float turnSoFar = 0f;
 
+    Texture[] spoops = new Texture[6];
+    String[] imgs = new String[]{"1.gif", "2.gif", "3.png", "4.png",  "5.png",  "6.gif"};
+
     public Universe (PooledEngine engine) {
+        for (int i = 0; i < imgs.length; i++) {
+            spoops[i] = new Texture(imgs[i]);
+        }
         this.engine = engine;
     }
 
     public void create () {
         Entity ship = createShip();
-        this.engine.addEntity(ship);
+        //this.engine.addEntity(ship);
 
         simulating = true;
     }
 
     public void update (float delta) {
-        if (simulating) {
-            turnSoFar += delta;
-            if (turnSoFar > turnDuration)
-                stopTurn();
-        } else {
-            if (Gdx.input.isKeyPressed(Keys.SPACE)) {
-                startTurn();
-            }
+        if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+            this.engine.addEntity(spoop());
         }
 
         this.engine.update(delta);
@@ -76,6 +76,36 @@ public class Universe {
         entity.add(movement);
         entity.add(drawable);
         entity.add(camera);
+        return entity;
+    }
+
+    Entity spoop () {
+        Entity entity = new Entity();
+
+        TransformComponent transform = new TransformComponent();
+        transform.pos.x = MathUtils.random(-100, 100);
+        transform.pos.y = MathUtils.random(-100, 100);
+
+        MovementComponent movement = new MovementComponent();
+        movement.acc.x = MathUtils.random(-0.01f, 0.01f);
+        movement.acc.y = MathUtils.random(-0.01f, 0.01f);
+        movement.rotVel = MathUtils.random(-0.5f, 0.5f);
+
+        int imgidx = MathUtils.random(imgs.length - 1);
+        Texture tex = spoops[imgidx];
+        DrawableComponent drawable = new DrawableComponent(tex, 100, 100);
+
+        CameraFocusedComponent camera = new CameraFocusedComponent();
+
+        entity.add(transform);
+        entity.add(movement);
+        entity.add(drawable);
+        entity.add(camera);
+        return entity;
+    }
+
+    Entity createStarfield () {
+        Entity entity = new Entity();
         return entity;
     }
 }

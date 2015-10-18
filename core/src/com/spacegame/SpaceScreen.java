@@ -21,8 +21,8 @@ public class SpaceScreen extends ScreenAdapter {
         engine.addSystem(new MovementSystem());
         engine.addSystem(new RenderingSystem(game.batch));
 
-        this.universe = new Universe(engine);
-        this.universe.create();
+        universe = new Universe(engine);
+        universe.create();
     }
 
 	@Override

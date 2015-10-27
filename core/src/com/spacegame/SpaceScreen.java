@@ -29,14 +29,14 @@ public class SpaceScreen extends ScreenAdapter implements InputProcessor {
         Gdx.input.setInputProcessor(this);
     }
 
-	@Override
-	public void resize (int width, int height) {
+    @Override
+    public void resize (int width, int height) {
         camera.viewportWidth = width;
         camera.viewportHeight = height;
-	}
+    }
 
-	@Override
-	public void render (float deltaTime) {
+    @Override
+    public void render (float deltaTime) {
         // LERP to the camera destination
         camera.position.set(camera.position.lerp(cameraDestination, deltaTime));
         camera.update();
@@ -51,7 +51,7 @@ public class SpaceScreen extends ScreenAdapter implements InputProcessor {
         game.batch.begin();
         checkerboard.sprite.draw(game.batch);
         game.batch.end();
-	}
+    }
 
     @Override
     public boolean touchDown (int screenX, int screenY, int pointer, int button) {
